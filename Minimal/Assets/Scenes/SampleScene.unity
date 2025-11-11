@@ -266,7 +266,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: d1330041c9f078940ab9b01ea61054ec, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: ccada27fd0c880045b57aa0dc6563e8b, type: 2}
+      objectReference: {fileID: 2100000, guid: d809b2b8378a0584f915560908611e07, type: 2}
     - target: {fileID: 919132149155446097, guid: d1330041c9f078940ab9b01ea61054ec, type: 3}
       propertyPath: m_Name
       value: TestCube (9)
@@ -1304,7 +1304,7 @@ MonoBehaviour:
   groundDrag: 5
   jumpForce: 17
   jumpCooldown: 0.25
-  airMultiplier: 0.4
+  airMultiplier: 0.1
   jumpKey: 32
   sprintKey: 304
   playerHeight: 2
@@ -1380,8 +1380,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7b995f28adebd7c46811bd512cb9447f, type: 2}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 8ab2354d82471764eb5e2e15689276f5, type: 2}
+  - {fileID: 2100000, guid: d809b2b8378a0584f915560908611e07, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2563,11 +2563,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: d1330041c9f078940ab9b01ea61054ec, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 7b995f28adebd7c46811bd512cb9447f, type: 2}
+      objectReference: {fileID: 2100000, guid: 8ab2354d82471764eb5e2e15689276f5, type: 2}
     - target: {fileID: -7511558181221131132, guid: d1330041c9f078940ab9b01ea61054ec, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2100000, guid: 6e89f6ac3eded2240bb635b138351bf9, type: 2}
     - target: {fileID: 919132149155446097, guid: d1330041c9f078940ab9b01ea61054ec, type: 3}
       propertyPath: m_Name
       value: TestCube
