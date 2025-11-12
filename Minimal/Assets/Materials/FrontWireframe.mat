@@ -33,7 +33,7 @@ Material:
     - _QUADS: 1
     - _WIREFRAME: 2
     m_Floats:
-    - _WireframeScale: 0.5
+    - _WireframeScale: 0.8
     m_Colors:
     - _WireframeColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
