@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - ColorController
+  - Color Object
   layers:
   - Default
   - TransparentFX
