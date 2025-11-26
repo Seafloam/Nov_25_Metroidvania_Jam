@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -13,11 +14,14 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
+    public float slamForce;
     bool readyToJump = true;
+    bool readyToSlam = true;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
+    public KeyCode slamKey = KeyCode.LeftControl;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -43,8 +47,8 @@ public class PlayerMovement : MonoBehaviour
     {
         walking,
         sprinting,
-        air
-        // slam
+        air,
+        slam
         // wheel
     }
 
@@ -92,6 +96,12 @@ public class PlayerMovement : MonoBehaviour
             Jump();
 
             Invoke(nameof(ResetJump), jumpCooldown);
+        }
+
+        // when to slam
+        if(Input.GetKey(slamKey) && readyToSlam && !grounded)
+        {
+            StartSlam();
         }
     }
 
@@ -173,7 +183,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-
+         
         exitingSlope = true;
 
         //reset y velocity
@@ -187,6 +197,29 @@ public class PlayerMovement : MonoBehaviour
         readyToJump = true;
 
         exitingSlope = false;
+    }
+
+    private void StartSlam()
+    {
+        readyToSlam = false;
+        Debug.Log("Slam!");
+        rb.linearVelocity = Vector3.zero;
+        rb.AddForce(Vector3.down * slamForce, ForceMode.Force);
+        StartCoroutine(WaitUntilGrounded());
+        readyToSlam = true;
+    }
+
+    IEnumerator WaitUntilGrounded()
+    {
+        Debug.Log("waiting for player to be grounded...");
+        yield return new WaitUntil(() => grounded == true);
+        ResetSlam();
+    }
+
+    private void ResetSlam()
+    {
+        Debug.Log("Slam Reset");
+        readyToSlam = true;
     }
 
     private bool OnSlope()
