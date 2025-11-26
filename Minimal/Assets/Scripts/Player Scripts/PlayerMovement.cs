@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float groundDrag;
 
     public float jumpForce;
+    public float shortJumpDownForce;
     public float jumpCooldown;
     public float airMultiplier;
     public float slamForce;
@@ -26,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Ground Check")]
     public float playerHeight;
+    public Transform groundCheckStart;
     public LayerMask Ground;
     bool grounded;
 
@@ -67,6 +69,8 @@ public class PlayerMovement : MonoBehaviour
     {
         // ground Check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, Ground);
+        //RaycastHit groundHit;
+        //grounded = Physics.SphereCast(groundCheckStart.position, playerHeight / 4, Vector3.down, out groundHit, 0.5f, Ground);
 
         MyInput();
         SpeedControl();
@@ -99,6 +103,12 @@ public class PlayerMovement : MonoBehaviour
             Jump();
 
             Invoke(nameof(ResetJump), jumpCooldown);
+        }
+
+        if(Input.GetKeyUp(jumpKey) && !readyToJump && !grounded)
+        {
+            //if player is jumping and the jump button is released early, make the jump shorter by adding downward force
+            rb.AddForce(Vector3.down * shortJumpDownForce, ForceMode.Force);
         }
 
         // when to slam
@@ -150,7 +160,7 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
 
         // in air
-        else if(!grounded)
+        else if (!grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
 
         // turn gravity off while on Slope
