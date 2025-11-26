@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpCooldown;
     public float airMultiplier;
     public float slamForce;
+    public Collider slamHitbox;
     bool readyToJump = true;
     bool readyToSlam = true;
 
@@ -57,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        //make sure slam hitbox is not enabled to start
+        DisableSlamHitbox();
     }
     
 
@@ -176,8 +179,6 @@ public class PlayerMovement : MonoBehaviour
                 rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
             }
         }
-
-      
     }
 
 
@@ -205,6 +206,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Slam!");
         rb.linearVelocity = Vector3.zero;
         rb.AddForce(Vector3.down * slamForce, ForceMode.Force);
+        EnableSlamHitbox();
         StartCoroutine(WaitUntilGrounded());
         readyToSlam = true;
     }
@@ -219,7 +221,24 @@ public class PlayerMovement : MonoBehaviour
     private void ResetSlam()
     {
         Debug.Log("Slam Reset");
+        DisableSlamHitbox();
         readyToSlam = true;
+    }
+
+    public void DisableSlamHitbox()
+    {
+        if (slamHitbox != null)
+        {
+            slamHitbox.enabled = false;
+        }
+    }
+
+    public void EnableSlamHitbox()
+    {
+        if (slamHitbox != null)
+        {
+            slamHitbox.enabled = true;
+        }
     }
 
     private bool OnSlope()
