@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, ISprint
 {
     [Header("Movement")]
     // move speed only changed in script
@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public float airMultiplier;
     public float slamForce;
     public Collider slamHitbox;
+    public Collider sprintHitbox;
     bool readyToJump = true;
     bool readyToSlam = true;
     bool readyToSprint = true;
@@ -66,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
         //make sure slam hitbox is not enabled to start
         DisableSlamHitbox();
         isSprinting = false;
+        
     }
     
 
@@ -272,6 +274,12 @@ public class PlayerMovement : MonoBehaviour
     public void StartSprint()
     {
 
+    }
+
+    public void OnSprintHit()
+    {
+        Debug.Log("Bonk!");
+        isSprinting = false;
     }
 
     private bool OnSlope()
