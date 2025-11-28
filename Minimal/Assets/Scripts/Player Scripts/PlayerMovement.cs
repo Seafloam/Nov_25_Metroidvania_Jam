@@ -19,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     public Collider slamHitbox;
     bool readyToJump = true;
     bool readyToSlam = true;
+    bool readyToSprint = true;
+    bool isSprinting;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -28,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     public Transform groundCheckStart;
+    public float groundCheckRadius = 0.5f;
     public LayerMask Ground;
     bool grounded;
 
@@ -52,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
         sprinting,
         air,
         slam
-        // wheel
+        
     }
 
     
@@ -62,15 +65,23 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
         //make sure slam hitbox is not enabled to start
         DisableSlamHitbox();
+        isSprinting = false;
     }
     
 
     void Update()
     {
         // ground Check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, Ground);
-        //RaycastHit groundHit;
-        //grounded = Physics.SphereCast(groundCheckStart.position, playerHeight / 4, Vector3.down, out groundHit, 0.5f, Ground);
+        //grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, Ground);
+        
+        if (Physics.OverlapSphere(groundCheckStart.position, groundCheckRadius, Ground).Length > 0)
+        {
+            grounded = true;
+        }
+        else
+        {
+            grounded = false;
+        }
 
         MyInput();
         SpeedControl();
@@ -105,23 +116,30 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
-        if(Input.GetKeyUp(jumpKey) && !readyToJump && !grounded)
+        if (Input.GetKeyUp(jumpKey) && !readyToJump && !grounded)
         {
             //if player is jumping and the jump button is released early, make the jump shorter by adding downward force
             rb.AddForce(Vector3.down * shortJumpDownForce, ForceMode.Force);
         }
 
         // when to slam
-        if(Input.GetKey(slamKey) && readyToSlam && !grounded)
+        if (Input.GetKey(slamKey) && readyToSlam && !grounded)
         {
             StartSlam();
+        }
+
+        // when to sprint
+        if (Input.GetKey(sprintKey) && readyToSprint && !isSprinting && grounded)
+        {
+            Debug.Log("AAAAAAAAAAA");
+            isSprinting = true;
         }
     }
 
     private void StateHandler()
     {
         // Mode - sprinting
-        if(grounded && Input.GetKey(sprintKey))
+        if (isSprinting && grounded)
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
@@ -249,6 +267,11 @@ public class PlayerMovement : MonoBehaviour
         {
             slamHitbox.enabled = true;
         }
+    }
+
+    public void StartSprint()
+    {
+
     }
 
     private bool OnSlope()

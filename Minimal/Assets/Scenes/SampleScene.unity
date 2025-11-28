@@ -362,7 +362,7 @@ Transform:
   m_GameObject: {fileID: 170622350}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.08, z: 0}
+  m_LocalPosition: {x: 0, y: -0.672, z: 0}
   m_LocalScale: {x: 1.1591, y: 1.1591, z: 1.1591}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1779,8 +1779,8 @@ MonoBehaviour:
       Radius: 6.95
       Height: 2.25
     Bottom:
-      Radius: 4.7
-      Height: 0.85
+      Radius: 0.38
+      Height: 0.57
     SplineCurvature: 0.5
   RecenteringTarget: 2
   HorizontalAxis:
@@ -2464,6 +2464,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1563645435
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1563645436}
+  - component: {fileID: 1563645437}
+  m_Layer: 7
+  m_Name: Charge Hitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1563645436
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563645435}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.333}
+  m_LocalScale: {x: 0.69402, y: 1.4892, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1004236759}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1563645437
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563645435}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1577273423 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d1330041c9f078940ab9b01ea61054ec, type: 3}
@@ -2668,7 +2721,7 @@ Transform:
   m_GameObject: {fileID: 1630313102}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.611, z: 0}
+  m_LocalPosition: {x: 0, y: -0.751, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3070,6 +3123,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 170622352}
     - target: {fileID: 2934666664414813980, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
+      propertyPath: chargeSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2934666664414813980, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
       propertyPath: jumpCooldown
       value: 0.2
       objectReference: {fileID: 0}
@@ -3081,6 +3138,10 @@ PrefabInstance:
       propertyPath: groundCheckStart
       value: 
       objectReference: {fileID: 1630313103}
+    - target: {fileID: 2934666664414813980, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
+      propertyPath: groundCheckRadius
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 2934666664414813980, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
       propertyPath: shortJumpDownForce
       value: 220
@@ -3134,6 +3195,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3212509641912892814, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1630313103}
+    - targetCorrespondingSourceObject: {fileID: 3212509641912892814, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1563645436}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
 --- !u!1660057539 &9223372036854775807
