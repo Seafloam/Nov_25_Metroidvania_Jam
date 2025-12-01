@@ -12,6 +12,7 @@ public class SlamCollisionDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Slam!");
         if(other.GetComponent<ISlammable>() != null)
         {
             Debug.Log(other.name);

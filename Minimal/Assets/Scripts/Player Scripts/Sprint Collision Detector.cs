@@ -5,15 +5,23 @@ using UnityEngine;
 public class SprintCollisionDetector : MonoBehaviour
 {
     public GameObject player;
+    public GameObject hitboxLocation;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        player.GetComponent<ISprint>().OnSprintHit();
     }
 
-    void OnCollisionEnter(Collision collision)
+    void FixedUpdate()
     {
-        if(collision.gameObject.CompareTag("Wall"))
+        transform.position = hitboxLocation.transform.position;
+        transform.rotation = hitboxLocation.transform.rotation;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("collided with " + other.gameObject.name + "with tag " + other.gameObject.tag);
+        if(other.gameObject.CompareTag("Wall"))
         {
             player.GetComponent<ISprint>().OnSprintHit();
         }
