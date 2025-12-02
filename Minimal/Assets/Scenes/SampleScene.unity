@@ -592,7 +592,7 @@ GameObject:
   - component: {fileID: 330585548}
   - component: {fileID: 330585549}
   m_Layer: 0
-  m_Name: PlayerCam
+  m_Name: MainCam
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -666,7 +666,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.053722974, y: 1.1647734e-16, z: -6.266558e-18, w: 0.9985559}
-  m_LocalPosition: {x: -1.96009, y: 5.38, z: -4.3599997}
+  m_LocalPosition: {x: -1.96009, y: 2.67, z: -4.3599997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1038,7 +1038,7 @@ MonoBehaviour:
       Radius: 6.95
       Height: 2.25
     Bottom:
-      Radius: 0.38
+      Radius: 1.07
       Height: 0.57
     SplineCurvature: 0.5
   RecenteringTarget: 2
@@ -1124,7 +1124,7 @@ Transform:
   m_GameObject: {fileID: 391614665}
   serializedVersion: 2
   m_LocalRotation: {x: 0.053722963, y: 9.6894025e-17, z: 1.1500188e-17, w: 0.9985559}
-  m_LocalPosition: {x: -1.96009, y: 5.38, z: -4.3599997}
+  m_LocalPosition: {x: -1.96009, y: 2.67, z: -4.3599997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1812,7 +1812,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 555fbf21ff932134aab56f8153c02a1b, type: 2}
+  - {fileID: 2100000, guid: 3cf2a838e5555794aa454643a233ec7f, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -1853,8 +1853,8 @@ Transform:
   m_GameObject: {fileID: 1012460107}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.9601, y: 0, z: -2.37189}
-  m_LocalScale: {x: 7.3331203, y: 7.3331203, z: 7.3331203}
+  m_LocalPosition: {x: -1.9601, y: 0, z: -2.3719}
+  m_LocalScale: {x: 211.44319, y: 211.44319, z: 211.44319}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2064,7 +2064,7 @@ GameObject:
   - component: {fileID: 1180006343}
   - component: {fileID: 1180006350}
   m_Layer: 0
-  m_Name: ThirdPersonCam
+  m_Name: FollowCam
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2289,7 +2289,7 @@ Transform:
   m_GameObject: {fileID: 1180006342}
   serializedVersion: 2
   m_LocalRotation: {x: 0.053722974, y: 1.148992e-16, z: 2.306645e-17, w: 0.9985559}
-  m_LocalPosition: {x: -1.96009, y: 5.38, z: -4.3599997}
+  m_LocalPosition: {x: -1.96009, y: 2.67, z: -4.3599997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3237,7 +3237,7 @@ Transform:
   m_GameObject: {fileID: 1630313102}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3671,12 +3671,32 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2934666664414813980, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
+      propertyPath: mainCam
+      value: 
+      objectReference: {fileID: 330585545}
+    - target: {fileID: 2934666664414813980, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
+      propertyPath: followCam
+      value: 
+      objectReference: {fileID: 1180006347}
+    - target: {fileID: 2934666664414813980, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
       propertyPath: playerCam
       value: 
       objectReference: {fileID: 330585545}
     - target: {fileID: 2934666664414813980, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
       propertyPath: slamForce
       value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 2934666664414813980, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
+      propertyPath: sprintCam
+      value: 
+      objectReference: {fileID: 391614672}
+    - target: {fileID: 2934666664414813980, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
+      propertyPath: walkSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2934666664414813980, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
+      propertyPath: groundDrag
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2934666664414813980, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
       propertyPath: slamHitbox
@@ -3688,7 +3708,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2934666664414813980, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
       propertyPath: sprintSpeed
-      value: 40
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 2934666664414813980, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
       propertyPath: followCamera
@@ -3724,7 +3744,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3212509641912892814, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.63
+      value: 0.92
       objectReference: {fileID: 0}
     - target: {fileID: 3212509641912892814, guid: 85e7cbebaa784594487cddb72c9a4b0e, type: 3}
       propertyPath: m_LocalPosition.z

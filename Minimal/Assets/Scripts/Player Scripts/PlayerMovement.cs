@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class PlayerMovement : MonoBehaviour, ISprint
 {
@@ -10,15 +11,25 @@ public class PlayerMovement : MonoBehaviour, ISprint
     public float sprintSpeed;
 
     public float groundDrag;
+    float groundDragBase = 10f;
+    float groundDragSprint = 0f;
 
     public float jumpForce;
     public float shortJumpDownForce;
     public float jumpCooldown;
+
     public float airMultiplier;
+    float airMultiplierBase = 0.6f;
+    float airMultiplierSprint = 0.1f;
+    
+
+
     public float slamForce;
     public Collider slamHitbox;
     public Collider sprintHitbox;
-    public Camera playerCam;
+    public Camera mainCam;
+    public CinemachineCamera followCam;
+    public CinemachineCamera sprintCam;
     bool readyToJump = true;
     bool readyToSlam = true;
     bool readyToSprint = true;
@@ -146,6 +157,8 @@ public class PlayerMovement : MonoBehaviour, ISprint
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
+            groundDrag = groundDragSprint;
+            airMultiplier = airMultiplierSprint;
         }
 
         // Mode - walking
@@ -153,6 +166,8 @@ public class PlayerMovement : MonoBehaviour, ISprint
         {
             state = MovementState.walking;
             moveSpeed = walkSpeed;
+            groundDrag = groundDragBase;
+            airMultiplier = airMultiplierBase;
         }
 
         else
@@ -164,7 +179,14 @@ public class PlayerMovement : MonoBehaviour, ISprint
     private void MovePlayer()
     {
         // calculate movement direction
-        moveDirection = orientation.forward * verticalInput +orientation.right * horizontalInput;
+        if(!isSprinting)
+        {
+            moveDirection = orientation.forward * verticalInput +orientation.right * horizontalInput;
+        }
+        else
+        {
+            moveDirection = orientation.forward;
+        }
         
 
         // on Slope
@@ -278,7 +300,8 @@ public class PlayerMovement : MonoBehaviour, ISprint
     public void StartSprint()
     {
         isSprinting = true;
-        playerCam.GetComponent<ThirdPersonCam>().SetSprinting();
+        mainCam.GetComponent<ThirdPersonCam>().SetSprinting();
+        
     }
 
     public void OnSprintHit()
@@ -286,7 +309,8 @@ public class PlayerMovement : MonoBehaviour, ISprint
         Debug.Log("Bonk!");
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        playerCam.GetComponent<ThirdPersonCam>().SetBasic();
+        
+        mainCam.GetComponent<ThirdPersonCam>().SetBasic();
         isSprinting = false;
     }
 
