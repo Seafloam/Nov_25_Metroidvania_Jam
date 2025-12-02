@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour, ISprint
     public float slamForce;
     public Collider slamHitbox;
     public Collider sprintHitbox;
-    public Camera followCamera;
+    public Camera playerCam;
     bool readyToJump = true;
     bool readyToSlam = true;
     bool readyToSprint = true;
@@ -135,7 +135,7 @@ public class PlayerMovement : MonoBehaviour, ISprint
         if (Input.GetKey(sprintKey) && readyToSprint && !isSprinting && grounded)
         {
             //Debug.Log("AAAAAAAAAAA");
-            isSprinting = true;
+            StartSprint();
         }
     }
 
@@ -166,11 +166,6 @@ public class PlayerMovement : MonoBehaviour, ISprint
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput +orientation.right * horizontalInput;
         
-        // change movement direction to move towards where the camera is looking
-       // Vector3 CameraY = (0, followCamera.transform.rotation.y, 0);
-        // camYFloat = followCamera.transform.rotation.y;
-        // camYInt = (float)camYFloat;
-        //moveDirection = CameraY;
 
         // on Slope
         if (OnSlope() && !exitingSlope)
@@ -240,11 +235,14 @@ public class PlayerMovement : MonoBehaviour, ISprint
     {
         readyToSlam = false;
         Debug.Log("Slam!");
+
+        // set all velocity to 0
         rb.linearVelocity = Vector3.zero;
+        // add slam velocity 
         rb.AddForce(Vector3.down * slamForce, ForceMode.Force);
         EnableSlamHitbox();
         StartCoroutine(WaitUntilGrounded());
-        readyToSlam = true;
+        
     }
 
     IEnumerator WaitUntilGrounded()
@@ -279,7 +277,8 @@ public class PlayerMovement : MonoBehaviour, ISprint
 
     public void StartSprint()
     {
-
+        isSprinting = true;
+        playerCam.GetComponent<ThirdPersonCam>().SetSprinting();
     }
 
     public void OnSprintHit()
@@ -287,6 +286,7 @@ public class PlayerMovement : MonoBehaviour, ISprint
         Debug.Log("Bonk!");
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
+        playerCam.GetComponent<ThirdPersonCam>().SetBasic();
         isSprinting = false;
     }
 

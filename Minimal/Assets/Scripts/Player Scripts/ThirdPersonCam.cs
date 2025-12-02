@@ -10,6 +10,18 @@ public class ThirdPersonCam : MonoBehaviour
 
         public float rotationSpeed;
 
+        public Transform sprintLookAt;
+
+        public GameObject thirdPersonCam;
+        public GameObject sprintCam;
+
+        public CameraStyle currentStyle;
+        public enum CameraStyle
+        {
+            Basic,
+            Sprinting
+        }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,13 +37,45 @@ public class ThirdPersonCam : MonoBehaviour
         orientation.forward = viewDir.normalized;
 
         // rotate player object
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        Vector3 inputDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
-
-        if (inputDir != Vector3.zero)
+        if(currentStyle == CameraStyle.Basic)
         {
-            playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime *rotationSpeed);
+            float horizontalInput = Input.GetAxis("Horizontal");
+            float verticalInput = Input.GetAxis("Vertical");
+            Vector3 inputDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
+
+            if (inputDir != Vector3.zero)
+            {
+                playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime *rotationSpeed);
+            }
         }
+        // if not basic, then use sprintlookat
+        else
+        {
+            Vector3 dirToSprintLookAt = sprintLookAt.position - new Vector3(transform.position.x, sprintLookAt.position.y, transform.position.z);
+            orientation.forward = dirToSprintLookAt.normalized;
+
+            playerObj.forward = dirToSprintLookAt.normalized;
+        }
+    }
+
+    private void SwitchCameraStyle(CameraStyle newStyle)
+    {
+        thirdPersonCam.SetActive(false);
+        sprintCam.SetActive(false);
+
+        if (newStyle == CameraStyle.Basic) thirdPersonCam.SetActive(true);
+        if (newStyle == CameraStyle.Sprinting) sprintCam.SetActive(true);
+
+        currentStyle = newStyle;
+    }
+
+    public void SetBasic()
+    {
+        SwitchCameraStyle(CameraStyle.Basic);
+    }
+
+    public void SetSprinting()
+    {
+        SwitchCameraStyle(CameraStyle.Sprinting);
     }
 }
