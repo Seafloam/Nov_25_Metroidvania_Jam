@@ -4,7 +4,7 @@ public class ColorUnlock : MonoBehaviour
 {
     public GameObject colorcontroller;
     public ColorController ColorCtr;
-    public string colorToUnlock;
+    public UnlockableColor colorToUnlock;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

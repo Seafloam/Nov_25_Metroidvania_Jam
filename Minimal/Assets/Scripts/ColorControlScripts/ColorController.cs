@@ -1,15 +1,38 @@
+using NUnit.Framework;
+using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
+public enum UnlockableColor
+{
+    blue,
+    red,
+    green, 
+    Invalid
+}
 
 public class ColorController : MonoBehaviour
 {
-    GameObject[] colorObjects;
-    ColorDisplay[] ColorDisplays;
-    string[] designatedColor;
+    List<ColorDisplay>[] ColorDisplays = new List<ColorDisplay>[(int)UnlockableColor.Invalid];
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        GameObject[] colorObjects;
+        colorObjects = GameObject.FindGameObjectsWithTag("Color Object");
 
+        for(int i = 0; i < (int)UnlockableColor.Invalid; i++)
+        {
+            ColorDisplays[i] = new List<ColorDisplay>();
+        }
+
+        for (int i = 0; i < colorObjects.Length; i++)
+        {
+            UnlockableColor tempColor;
+            ColorDisplay tempDisplay = colorObjects[i].GetComponent<ColorDisplay>();
+            tempColor = tempDisplay.DesignatedColor;
+
+            ColorDisplays[(int)tempColor].Add(tempDisplay);
+        }
     }
 
     // Update is called once per frame
@@ -18,27 +41,12 @@ public class ColorController : MonoBehaviour
         
     }
 
-    public void UnlockColor(string color)
+    public void UnlockColor(UnlockableColor color)
     {
-        
-        
-        colorObjects = GameObject.FindGameObjectsWithTag("Color Object");
-
-        ColorDisplays = new ColorDisplay[colorObjects.Length];
-        designatedColor = new string[colorObjects.Length];
-
-        for (int i = 0; i < colorObjects.Length; i++)
+        List<ColorDisplay> currentColorList = ColorDisplays[(int)color];
+        for (int i = 0; i < currentColorList.Count; i++)
         {
-            ColorDisplays[i] = colorObjects[i].GetComponent<ColorDisplay>();
-            designatedColor[i] = ColorDisplays[i].DesignatedColor;
-
-            for(int x = 0; x < ColorDisplays.Length; x++)
-            {
-                if(designatedColor[x] == color)
-                {
-                    ColorDisplays[x].Unlock();
-                }
-            }
+            currentColorList[i].Unlock();
         }
     }
 }

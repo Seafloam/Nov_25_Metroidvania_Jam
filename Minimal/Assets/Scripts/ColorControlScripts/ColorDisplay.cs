@@ -1,12 +1,17 @@
 using UnityEngine;
 
-public class ColorDisplay : MonoBehaviour
+public abstract class ColorDisplay : MonoBehaviour
 {
-    public string DesignatedColor;
+    public UnlockableColor DesignatedColor;
     public Material locked;
     public Material wire;
     public Material painted;
     public bool Wired;
+    public bool PlayerDetected = false;
+    Component[] ColorComponents;
+
+    public abstract void Activated();
+    public abstract void Deactivated();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,11 +22,30 @@ public class ColorDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (PlayerDetected == true && Input.GetKeyDown(KeyCode.E))
         {
-            print("E detected");
+            SetColored(Wired);
         }
     }
+
+    private void SetColored(bool colored)
+    {
+        if(colored)
+        {
+            GetComponent<Renderer>().material = painted;
+            Wired = false;
+            Activated();
+        }
+        else
+        {
+            GetComponent<Renderer>().material = wire;
+            Wired = true;
+            Deactivated();
+        }
+    }
+
+
+
 
     public void Unlock()
     {
@@ -31,18 +55,17 @@ public class ColorDisplay : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        if(other.gameObject.tag == "Player")
+        {
+            PlayerDetected = true;
+        }
     }
 
-  //This isnt working properly. Registering every button press but not actually changing the color
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        print("touching player");
-
-        if (other.gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.E))
+        if(other.gameObject.tag == "Player")
         {
-               GetComponent<Renderer>().material = painted;
-            Wired = false;
+            PlayerDetected = false;
         }
     }
 }
